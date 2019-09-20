@@ -629,10 +629,9 @@ void selection() { // menu de seleccion de programas
             control7();
             break;
         case 5:
-            program = 7;
+            cout<<" on working....... \n";
             system("pause");
             system("cls");
-            control11();
             break;
         case 6:
             cout<<" on working....... \n";

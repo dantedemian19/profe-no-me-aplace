@@ -276,6 +276,17 @@ void mostrarfifo(node liste) {// muestra desde el primer ingresado al ultimo
         z = z->sig;
     }
 };
+void mostrarfifo8(node listis) {
+	node z = listis;
+	int i = 0;
+	system("cls");
+	cout << " nº" << "    |    " << "num    " << " \n";
+	while (z != NULL) {
+		cout << " " << i + 1 << "    |    " << z->num << "\n";
+		i += 1;
+		z = z->sig;
+	}
+};
 void mostrarlifo(node liste) {// muestra desde el ultimo ingresado al primero
     node z = last;
     int i = 0;
@@ -334,6 +345,25 @@ void eliminarnodo(node& liste) {// elimina un nodo de la lista
         }
     }
 };
+void guardado_impar() {
+	node aux;
+	node listis = NULL;
+	node listif = NULL;
+	node normal = start;
+	while (normal != NULL) {
+		if (normal->num % 2 != 0) {
+			aux = new(struct list);
+			aux->num = normal->num;
+			aux->sig = NULL;
+			aux->ant = listif;
+			listif->sig = aux;
+			listif = aux;
+		}
+		normal = normal->sig;
+	}
+	mostrarfifo8(listis);
+}
+
 void control1(){ //menu del programa 1
     node liste = NULL;
     int w = 0;
@@ -510,53 +540,35 @@ void control7() {// menu del programa 7
         }
     }
 };
-void control8() {// menu del programa 8,9,10
+void control8() {// menu del programa 8 y 9 (en proceso)
     node liste = NULL;
-    node listis = NULL;
-    node listif = NULL;
     int w = 0;
     bool fal = false;
     int valor = 0;
-    while (w != 7) {
+    while (w != 5) {
         bool fal = false;
         cout << " Programa: " << program << "\n";
-        cout << " pulse 1 para crear una nueva lista \n";
-        cout << " pulse 2 para ingresar un nuevo nodo al final de la lista \n";
-        cout << " pulse 3 para ingresar un nuevo nodo en una posicion \n";
-        cout << " pulse 4 para eliminar un nuevo nodo de una posicion \n";
-        cout << " pulse 5 para mostar la lista \n";
-        cout << " pulse 6 para saber cuantos nodos tiene la lista \n";
-        cout << " pulse 7 para salir \n";
+        cout << " pulse 1 para ingresar un nodo \n";
+        cout << " pulse 2 para mostrar una lista con los datos impares de la lista \n";
+        cout << " pulse 3 para mostrar una lista con los datos mayores del promedio \n";
+        cout << " pulse 4 para mostar la lista \n";
+        cout << " pulse 5 para salir \n";
         cin >> w;
         system("cls");
         switch (w) {
         case 1:
-            borrar();
-            crear(liste);
+			cout << "ingrese el valor del nodo: ";
+			cin >> valor;
+			ingresar3(liste,valor);
             system("cls");
             break;
         case 2:
-            while (!fal) {
-                cout << "ingrese el valor del nodo: ";
-                cin >> valor;
-                fal = repetir(valor);
-                if (fal != true) {
-                    cout << " el valor esta repetido, ingrese otro";
-                }
-            }
-            ingresar7(liste, valor);
+			guardado_impar();
+			system("pause");
             system("cls");
             break;
         case 3:
-            while (!fal) {
-                cout << "ingrese el valor del nodo: ";
-                cin >> valor;
-                fal = repetir(valor);
-                if (fal != true) {
-                    cout << " el valor esta repetido, ingrese otro";
-                }
-            }
-            ingresar3(liste, valor);
+            
             system("cls");
             break;
         case 4:
@@ -584,7 +596,7 @@ void control8() {// menu del programa 8,9,10
         }
     }
 };
-void control11() {// menu del programa 11
+void control11() {// menu del programa 11 (en proceso)
 
 };
 void selection() { // menu de seleccion de programas
@@ -598,7 +610,7 @@ void selection() { // menu de seleccion de programas
         cout << " pulse 2 para ingresar al programa 2 \n";
         cout << " pulse 3 para ingresar al programa 3 \n";
         cout << " pulse 4 para ingresar al programa 7 \n";
-        cout << " pulse 5 para ingresar al programa (8,9,19) \n";
+        cout << " pulse 5 para ingresar al programa (8 y 9) \n";
         cout << " pulse 6 para ingresar al programa 11 \n";
         cout << " pulse 7 para salir \n";
         cin >> program;
@@ -629,9 +641,9 @@ void selection() { // menu de seleccion de programas
             control7();
             break;
         case 5:
-            cout<<" on working....... \n";
-            system("pause");
-            system("cls");
+			cout << " on working....... \n";
+			system("pause");
+			system("cls");
             break;
         case 6:
             cout<<" on working....... \n";
@@ -652,4 +664,3 @@ void selection() { // menu de seleccion de programas
 int main() {
     selection();
 }
-

@@ -362,8 +362,27 @@ void guardado_impar() {
 		normal = normal->sig;
 	}
 	mostrarfifo8(listis);
-}
-
+};
+void saveprom() {//guarda en una lista los valores superiores al promedio de la lista
+	int prom=promediolist();
+	node aux;//copiar a guardado impar falla el start
+	node listjf=NULL;
+	node listjs=NULL;
+	node normal = start;
+	while (normal != NULL) {
+		if (normal != null & & normal->num >prom & & listjs !=NULL) listjs=normal;
+		if (normal->num >prom) {
+			aux = new(struct list);
+			aux->num = normal->num;
+			aux->sig = NULL;
+			aux->ant = listjf;
+			listjf->sig = aux;
+			listjf = aux;
+		}
+		normal = normal->sig;
+	}
+	mostrarfifo8(listjs);
+};
 void control1(){ //menu del programa 1
     node liste = NULL;
     int w = 0;

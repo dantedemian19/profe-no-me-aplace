@@ -1,10 +1,10 @@
-﻿#include <iostream>
+#include <iostream>
 #include <Windows.h>
 #include <stdlib.h>
 #include <fstream>
 using namespace std;
 int n = 0;// contador de nodos
-int program = -1;// programa elegido
+int program = 0;// programa elegido
 
 struct list {// definicion de la estructura
 	int num = 0;//valor del nodo
@@ -39,7 +39,7 @@ void crear(node& liste) {// resetea la lista
 	system("pause");
 	system("cls");
 };
-void borrarn(node& p, node& q, node& r) {// borra un nodo 
+void borrarn(node& p, node& q, node& r) {// borra un nodo
 	n -= 1;
 	delete q;
 	if (p != NULL) p->sig = r;
@@ -99,6 +99,66 @@ void ordenar(node& liste, int valor) {// ordena la lista de menor a mayor
 						liste->sig = NULL;
 						ezet = false;
 						last = liste;
+
+					}
+
+				}
+			}
+		}
+	}
+};
+void ordenar11(node& liste,node& lists,node& listf, int valor) {// ordena la lista de menor a mayor
+	bool ezet = true; // verifica si ya se encontro la posicion del nodo
+	if (n == 2) {// el numero dos de la lista solo puede estar adelante o atras del ultimo, no en el medio
+		node q = lists; // el cabezal mas bajo
+		node p = q->sig; // el cabezal mas alto, en este caso inutil, pero abajo es necesario
+		if (valor < q->num) {// si va antes
+			q->ant = liste;
+			liste->ant = NULL;
+			liste->sig = q;
+			lists = liste;
+		}
+		else {
+			if (q->num < valor) {//si va despues
+				q->sig = liste;
+				liste->ant = q;
+				liste->sig = NULL;
+				ezet = false;
+				listf = liste;
+			}
+		}
+	}
+	if (n != 1 && n != 2) {
+		node q = lists; // lo mismo que arriba
+		node p = q->sig; // lo mismo que arriba
+		if (valor < q->num) {//si va primero
+			q->ant = liste;
+			liste->ant = NULL;
+			liste->sig = q;
+			lists = liste;
+
+		}
+		else {
+			while (ezet) {
+				if (p->num >= valor && q->num < valor) {//si va en el medio de dos numeros
+					liste->ant = q;
+					liste->sig = p;
+					p->ant = liste;
+					q->sig = liste;
+					ezet = false;
+					listf->sig = NULL;
+					lists->ant = NULL;
+
+				}
+				else {
+					q = q->sig;
+					p = p->sig;;
+					if (p == NULL && ezet) {// si va ultimo
+						q->sig = liste;
+						liste->ant = q;
+						liste->sig = NULL;
+						ezet = false;
+						listf = liste;
 
 					}
 
@@ -167,6 +227,66 @@ void ordenarevez(node& liste, int valor) {// ordena la lista de menor a mayor
 		}
 	}
 };
+void ordenarevez11(node& liste, node& lists, node& listf, int valor) {// ordena la lista de menor a mayor
+	bool ezet = true; // verifica si ya se encontro la posicion del nodo
+	if (n == 2) {// el numero dos de la lista solo puede estar adelante o atras del ultimo, no en el medio
+		node q = lists; // el cabezal mas bajo
+		node p = q->sig; // el cabezal mas alto, en este caso inutil, pero abajo es necesario
+		if (valor > q->num) {// si va antes
+			q->ant = liste;
+			liste->ant = NULL;
+			liste->sig = q;
+			lists = liste;
+		}
+		else {
+			if (q->num > valor) {//si va despues
+				q->sig = liste;
+				liste->ant = q;
+				liste->sig = NULL;
+				ezet = false;
+				listf = liste;
+			}
+		}
+	}
+	if (n != 1 && n != 2) {
+		node q = lists; // lo mismo que arriba
+		node p = q->sig; // lo mismo que arriba
+		if (valor > q->num) {//si va primero
+			q->ant = liste;
+			liste->ant = NULL;
+			liste->sig = q;
+			lists = liste;
+
+		}
+		else {
+			while (ezet) {
+				if (p->num <= valor && q->num > valor) {//si va en el medio de dos numeros
+					liste->ant = q;
+					liste->sig = p;
+					p->ant = liste;
+					q->sig = liste;
+					ezet = false;
+					listf->sig = NULL;
+					lists->ant = NULL;
+
+				}
+				else {
+					q = q->sig;
+					p = p->sig;;
+					if (p == NULL && ezet) {// si va ultimo
+						q->sig = liste;
+						liste->ant = q;
+						liste->sig = NULL;
+						ezet = false;
+						listf = liste;
+
+					}
+
+				}
+			}
+		}
+	}
+};
 float promediolist() { // saca el promedio de los valores de la lista
 	node z = start;
 	float prom = 0;
@@ -212,8 +332,22 @@ void ingresar(node& liste, int valor) { //ingresa un valor nuevo al la lista
 	if (program == 1 || program == 2) {
 		ordenar(liste, valor);// ordenamiento del programa 1 y 2;
 	}
-}
-void ingresar7(node& liste, int valor) {// ingresa al final de la lista 
+};
+void ingresar11(node& liste,node& lists,node& listf, int valor) { //ingresa un valor nuevo al la lista
+	//ingreso de un nodo nuevo a la lista
+	node z = new(struct list);
+	z->num = valor;
+	if (n != 0) {
+
+	}
+	else {
+		z->ant = NULL;
+		listf = z;
+		listf = z;
+	}
+	liste = z;
+};
+void ingresar7(node& liste, int valor) {// ingresa al final de la lista
 	node z = new(struct list);
 	z->num = valor;
 	if (start == NULL) start = z;
@@ -330,7 +464,7 @@ void ingresar3(node& liste, int valor) { //ingresa un valor nuevo al la lista pa
 	liste = z;
 	n = n + 1;
 };
-int contadorpedorro() {// devuelve el numero de nodos que hay 
+int contadorpedorro() {// devuelve el numero de nodos que hay
 	node z = start;
 	int i = 0;
 	system("cls");
@@ -741,15 +875,15 @@ void control11() {// menu del programa 11 (en proceso)
 		case 4:
 			cout << "ingrese el valor del nodo: ";
 			cin >> valor;
-			ingresar(liste,valor);
-			ordenar(liste,valor);
+			ingresar11(listi,listis,listif,valor);
+			ordenar11(listi,listis,listif,valor);
 			system("cls");
 			break;
 		case 5:
 			cout << "ingrese el valor del nodo: ";
 			cin >> valor;
-			ingresar(liste, valor);
-			ordenarevez(liste, valor);
+			ingresar11(listj,listjs,listjf, valor);
+			ordenarevez11(listj,listjs,listjf, valor);
 			system("cls");
 			break;
 		case 6:
